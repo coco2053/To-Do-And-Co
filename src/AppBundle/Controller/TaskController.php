@@ -17,14 +17,15 @@ class TaskController extends Controller
     {
 
         $user = $this->getUser();
+        $tasks = $user->getTasks();
 
-        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
+        /*$tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
                       ->findBy(
                           array('user' => $user),
                           array('createdAt' => 'desc'),
                           null,
                           null
-                      );
+                      );*/
 
         return $this->render('task/list.html.twig', array(
             'tasks' => $tasks,
@@ -37,6 +38,7 @@ class TaskController extends Controller
     public function createAction(Request $request)
     {
         $task = new Task();
+        $task->setUser($this->getUser());
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
