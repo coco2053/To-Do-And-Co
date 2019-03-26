@@ -15,7 +15,20 @@ class TaskController extends Controller
      */
     public function listAction()
     {
-        return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
+
+        $user = $this->getUser();
+
+        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
+                      ->findBy(
+                          array('user' => $user),
+                          array('createdAt' => 'desc'),
+                          null,
+                          null
+                      );
+
+        return $this->render('task/list.html.twig', array(
+            'tasks' => $tasks,
+        ));
     }
 
     /**
