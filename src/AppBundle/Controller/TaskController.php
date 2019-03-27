@@ -20,29 +20,40 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/tasks", name="task_list")
+     * @Route("/taskstodo", name="task_todo_list")
      */
-    public function listAction()
+    public function listToDoAction()
     {
-
-        $user = $this->getUser();
-
-        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findAll();
-        /*$tasks = $user->getTasks();
-
         $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
                       ->findBy(
-                          array('user' => $user),
+                          array('isDone' => true),
                           array('createdAt' => 'desc'),
                           null,
                           null
-                      );*/
+                      );
 
         return $this->render('task/list.html.twig', array(
             'tasks' => $tasks,
         ));
     }
 
+    /**
+     * @Route("/tasksdone", name="task_done_list")
+     */
+    public function listDoneAction()
+    {
+        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
+                      ->findBy(
+                          array('isDone' => false),
+                          array('createdAt' => 'desc'),
+                          null,
+                          null
+                      );
+
+        return $this->render('task/list.html.twig', array(
+            'tasks' => $tasks,
+        ));
+    }
     /**
      * @Route("/tasks/create", name="task_create")
      */
