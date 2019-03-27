@@ -15,6 +15,7 @@ class UserController extends Controller
      */
     public function listAction()
     {
+        $this->denyAccessUnlessGranted('GET', $this->getUser());
         return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
     }
 

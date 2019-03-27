@@ -55,6 +55,19 @@ class User implements UserInterface
         $this->tasks = new ArrayCollection();
     }
 
+    public function isAdmin()
+    {
+        return in_array('ROLE_ADMIN', $this->getRoles());
+    }
+
+    public function isAnon()
+    {
+        if ($this->username == 'Anonyme') {
+            return true;
+        }
+        return false;
+    }
+
     public function getId()
     {
         return $this->id;

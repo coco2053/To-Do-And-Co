@@ -17,9 +17,11 @@ class TaskController extends Controller
     {
 
         $user = $this->getUser();
-        $tasks = $user->getTasks();
 
-        /*$tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
+        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findAll();
+        /*$tasks = $user->getTasks();
+
+        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
                       ->findBy(
                           array('user' => $user),
                           array('createdAt' => 'desc'),
@@ -98,6 +100,8 @@ class TaskController extends Controller
      */
     public function deleteTaskAction(Task $task)
     {
+        $this->denyAccessUnlessGranted('DELETE', $task);
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
