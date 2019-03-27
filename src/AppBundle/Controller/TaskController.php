@@ -10,6 +10,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends Controller
 {
+
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function indexAction()
+    {
+        return $this->render('task/index.html.twig');
+    }
+
     /**
      * @Route("/tasks", name="task_list")
      */
