@@ -26,7 +26,7 @@ class TaskController extends Controller
     {
         $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
                       ->findBy(
-                          array('isDone' => true),
+                          array('isDone' => false),
                           array('createdAt' => 'desc'),
                           null,
                           null
@@ -44,7 +44,7 @@ class TaskController extends Controller
     {
         $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')
                       ->findBy(
-                          array('isDone' => false),
+                          array('isDone' => true),
                           array('createdAt' => 'desc'),
                           null,
                           null
@@ -73,7 +73,7 @@ class TaskController extends Controller
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_todo_list');
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
@@ -93,7 +93,7 @@ class TaskController extends Controller
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_todo_list');
         }
 
         return $this->render('task/edit.html.twig', [
@@ -112,7 +112,7 @@ class TaskController extends Controller
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_todo_list');
     }
 
     /**
@@ -128,6 +128,6 @@ class TaskController extends Controller
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_todo_list');
     }
 }
