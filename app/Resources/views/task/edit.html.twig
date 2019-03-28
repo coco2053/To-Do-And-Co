@@ -2,8 +2,9 @@
 
 {% block body %}
     <div class="row">
-        {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
-            {{ form_widget(form) }}
+
+        {{ form_row(form.title, {'label': 'Titre', 'attr': {'placeholder': 'Entrez le titre de la tâche'}}) }}
+        {{ form_row(form.content, {'label': 'Contenu', 'attr': {'placeholder': 'Entrez le contenu de la tâche'}}) }}}
 
             <button type="submit" class="btn btn-success pull-right">Modifier</button>
         {{ form_end(form) }}
