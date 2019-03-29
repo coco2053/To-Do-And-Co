@@ -12,7 +12,7 @@ class UserVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['GET'])
+        return in_array($attribute, ['GET', 'EDIT'])
             && $subject instanceof \AppBundle\Entity\User;
     }
 
@@ -25,6 +25,9 @@ class UserVoter extends Voter
 
         switch ($attribute) {
             case 'GET':
+                return $user->isAdmin();
+                break;
+            case 'EDIT':
                 return $user->isAdmin();
                 break;
         }

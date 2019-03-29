@@ -12,7 +12,7 @@ class TaskVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['DELETE'])
+        return in_array($attribute, ['DELETE', 'EDIT'])
             && $subject instanceof \AppBundle\Entity\Task;
     }
 
@@ -25,6 +25,15 @@ class TaskVoter extends Voter
         }
 
         switch ($attribute) {
+            case 'EDIT':
+                $role = $user->getRoles();
+                if ($user == $task->getUser()) {
+                    return true;
+                }
+                if ($user->isAdmin() && $task->getUser()->isAnon()) {
+                    return true;
+                }
+                break;
             case 'DELETE':
                 $role = $user->getRoles();
                 if ($user == $task->getUser()) {
