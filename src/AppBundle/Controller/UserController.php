@@ -19,7 +19,13 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('GET', $this->getUser());
 
-        return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
+        $response = $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
+
+        $response->setSharedMaxAge(200);
+
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+
+        return $response;
     }
 
     /**

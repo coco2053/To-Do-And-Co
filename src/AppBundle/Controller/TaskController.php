@@ -17,7 +17,11 @@ class TaskController extends AbstractController
      */
     public function indexAction()
     {
-        return $this->render('task/index.html.twig');
+        $response = $this->render('task/index.html.twig');
+        $response->setSharedMaxAge(200);
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+
+        return $response;
     }
 
     /**
