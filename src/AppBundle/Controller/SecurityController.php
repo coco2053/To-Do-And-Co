@@ -13,7 +13,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
