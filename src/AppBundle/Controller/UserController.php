@@ -50,7 +50,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request, EntityManagerInterface $em)
+    public function editAction(User $user, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
         $this->denyAccessUnlessGranted('EDIT', $this->getUser());
 
@@ -59,7 +59,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+            $password = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
             $em->flush();
