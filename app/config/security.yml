@@ -15,16 +15,22 @@ security:
 
         main:
             logout_on_user_change: true
-            anonymous: ~
-            pattern: ^/
+            anonymous: true
+            provider: doctrine
             form_login:
                 login_path: login
-                check_path: login_check
-                always_use_default_target_path:  true
+                check_path: login
                 default_target_path:  /
+                username_parameter: username
+                password_parameter: password
+
             logout: ~
+            guard:
+                authenticators:
+                    - AppBundle\Security\LoginFormAuthenticator
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/users/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users, roles: ROLE_ADMIN }
+        - { path: ^/, roles: [ROLE_ADMIN, ROLE_USER]}
