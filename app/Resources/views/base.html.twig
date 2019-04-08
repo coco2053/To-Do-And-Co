@@ -39,9 +39,8 @@
         <div class="container">
             <div class="row">
                 <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-
                 {% if app.user %}
-                    {% if app.user.roles.0 == 'ROLE_ADMIN' %}
+                    {% if app.user.isAdmin %}
                         <a href="{{ path('user_list') }}" class="btn btn-warning">Gestion des utilisateurs</a>
                     {% endif %}
                 {% endif %}
@@ -97,7 +96,8 @@
 
         </div>
 
-        <script src="{{ asset('js/jquery.js') }}"></script>
+        <script
+              src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     </body>
 </html>
