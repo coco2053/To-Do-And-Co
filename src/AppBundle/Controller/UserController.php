@@ -10,10 +10,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class UserController.
+ *
+ * @codeCoverageIgnore
+ */
 class UserController extends AbstractController
 {
     /**
      * @Route("/users", name="user_list")
+     *
+     * @return Response
      */
     public function listAction()
     {
@@ -29,7 +36,13 @@ class UserController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $encoder
+     *
      * @Route("/users/create", name="user_create")
+     *
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
@@ -54,7 +67,14 @@ class UserController extends AbstractController
     }
 
     /**
+     * @param User $user
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @param UserPasswordEncoderInterface $encoder
+     *
      * @Route("/users/{id}/edit", name="user_edit")
+     *
+     * @return RedirectResponse|Response
      */
     public function editAction(User $user, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {

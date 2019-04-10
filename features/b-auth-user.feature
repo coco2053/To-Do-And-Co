@@ -38,24 +38,24 @@ Feature:
     When I click on link "edit_task_Bastien"
     Then the page should contain "Access Denied"
 
-  @mark_task
+  @mark_task_done
   Scenario: An authenicated user marks his task done
     Given I'm logged with USER role
     Given I'm on "/taskstodo" page
     When I click on button "Marquer comme faite"
     Then the page should contain "Superbe ! La tâche"
 
-  @delete_task
-  Scenario: An authenicated user deletes his task
-    Given I'm logged with USER role
-    Given I'm on "/taskstodo" page
-    When I click on button "delete_task_Marco"
-    Then the page should contain "Superbe ! La tâche a bien été supprimée. "
-
-  @delete_task_done
-  Scenario: An authenicated user deletes his done task
+  @mark_task_todo
+  Scenario: An authenicated user marks his task todo
     Given I'm logged with USER role
     Given I'm on "/tasksdone" page
+    When I click on button "Marquer non terminée"
+    Then the page should contain "Superbe ! La tâche"
+
+  @delete_task_todo
+  Scenario: An authenicated user deletes his done task
+    Given I'm logged with USER role
+    Given I'm on "/taskstodo" page
     When I click on button "delete_task_Marco"
     Then the page should contain "Superbe ! La tâche a bien été supprimée. "
 
