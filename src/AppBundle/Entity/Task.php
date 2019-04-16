@@ -131,7 +131,7 @@ class Task
      */
     public function getUser()
     {
-        if (is_null($this->user)) {
+        if ($this->user === null) {
             return $this->getAnonUser();
         }
         return $this->user;
