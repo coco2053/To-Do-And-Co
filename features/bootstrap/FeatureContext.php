@@ -5,6 +5,26 @@ use Behat\MinkExtension\Context\MinkContext;
 class FeatureContext extends MinkContext
 {
     /**
+     * @Given  I delete Marco user
+     */
+    public function deleteUser()
+    {
+        try {
+            $pdo = new PDO('mysql:host=localhost;dbname=todo;charset=utf8', 'root', '');
+        } catch (Exception $e) {
+            echo 'Erreur : '.$e->getMessage();
+        }
+
+        $user = $pdo->prepare("SELECT 1 FROM user WHERE username=?");
+        $user->execute(['Marco']);
+        $user->fetchColumn();
+
+        if ($user) {
+            $pdo->exec('DELETE FROM user WHERE username = "Marco"');
+        }
+    }
+
+    /**
      * @Given I'm on :path page
      */
     public function aUserSendsARequestTo(string $path)

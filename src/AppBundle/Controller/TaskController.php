@@ -9,11 +9,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class TaskController.
+ *
+ * @codeCoverageIgnore
+ */
 class TaskController extends AbstractController
 {
 
     /**
      * @Route("/", name="homepage")
+     *
+     * @return Response
      */
     public function indexAction()
     {
@@ -26,6 +33,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/taskstodo", name="task_todo_list")
+     *
+     * @return Response
      */
     public function listToDoAction()
     {
@@ -44,6 +53,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasksdone", name="task_done_list")
+     *
+     * @return Response
      */
     public function listDoneAction()
     {
@@ -59,8 +70,14 @@ class TaskController extends AbstractController
             'tasks' => $tasks,
         ));
     }
+
     /**
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     *
      * @Route("/tasks/create", name="task_create")
+     *
+     * @return RedirectResponse|Response
      */
     public function createAction(Request $request, EntityManagerInterface $em)
     {
@@ -83,7 +100,13 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param Task $task
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     *
      * @Route("/tasks/{id}/edit", name="task_edit")
+     *
+     * @return RedirectResponse|Response
      */
     public function editAction(Task $task, Request $request, EntityManagerInterface $em)
     {
@@ -108,7 +131,12 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param Task $task
+     * @param EntityManagerInterface $em
+     *
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     *
+     * @return RedirectResponse
      */
     public function toggleTaskAction(Task $task, EntityManagerInterface $em)
     {
@@ -121,7 +149,12 @@ class TaskController extends AbstractController
     }
 
     /**
+     * @param Task $task
+     * @param EntityManagerInterface $em
+     *
      * @Route("/tasks/{id}/delete", name="task_delete")
+     *
+     * @return RedirectResponse
      */
     public function deleteTaskAction(Task $task, EntityManagerInterface $em)
     {

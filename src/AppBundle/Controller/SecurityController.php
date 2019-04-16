@@ -8,10 +8,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class SecurityController.
+ *
+ * @codeCoverageIgnore
+ */
 class SecurityController extends AbstractController
 {
     /**
+     * @param AuthenticationUtils $authenticationUtils
+     *
      * @Route("/login", name="login")
+     *
+     * @return Response
      */
     public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {

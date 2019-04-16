@@ -19,13 +19,33 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+/**
+ * Class LoginFormAuthenticator.
+ *
+ * @codeCoverageIgnore
+ */
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
+    /**
+     * @var EntityManagerInterface
+    */
     private $entityManager;
+
+    /**
+     * @var RouterInterface
+    */
     private $router;
+
+    /**
+     * @var CsrfTokenManagerInterface
+    */
     private $csrfTokenManager;
+
+    /**
+     * @var UserPasswordEncoderInterface
+    */
     private $passwordEncoder;
 
     /**
@@ -33,6 +53,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      * @param EntityManagerInterface    $entityManager
      * @param RouterInterface           $router
      * @param CsrfTokenManagerInterface $csrfTokenManager
+     * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(EntityManagerInterface $entityManager, RouterInterface $router, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -75,9 +96,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     /**
      * [getUser]
-     * @param  [type]                $credentials  [description]
-     * @param  UserProviderInterface $userProvider [description]
-     * @return [user]                              [description]
+     * @param  [type]                $credentials
+     * @param  UserProviderInterface $userProvider
+     * @return [user]
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {

@@ -6,16 +6,30 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class TaskVoter.
+ */
 class TaskVoter extends Voter
 {
+    /**
+     * @param $attribute
+     * @param $subject
+     *
+     * @return boolean
+     */
     protected function supports($attribute, $subject)
     {
-        // replace with your own logic
-        // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, ['DELETE', 'EDIT'])
             && $subject instanceof \AppBundle\Entity\Task;
     }
 
+    /**
+     * @param $attribute
+     * @param $task
+     * @param TokenInterface $token
+     *
+     * @return boolean
+     */
     protected function voteOnAttribute($attribute, $task, TokenInterface $token)
     {
         $user = $token->getUser();
@@ -26,7 +40,6 @@ class TaskVoter extends Voter
 
         switch ($attribute) {
             case 'EDIT':
-                $role = $user->getRoles();
                 if ($user == $task->getUser()) {
                     return true;
                 }
@@ -35,7 +48,6 @@ class TaskVoter extends Voter
                 }
                 break;
             case 'DELETE':
-                $role = $user->getRoles();
                 if ($user == $task->getUser()) {
                     return true;
                 }
