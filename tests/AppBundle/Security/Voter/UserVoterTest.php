@@ -13,7 +13,6 @@ class UserVoterTest extends TestCase
     private $voter;
     private $token;
     private $user;
-    private $targetUser;
 
     public function setUp()
     {

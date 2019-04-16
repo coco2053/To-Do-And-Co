@@ -12,7 +12,7 @@ class FeatureContext extends MinkContext
         try {
             $pdo = new PDO('mysql:host=localhost;dbname=todo;charset=utf8', 'root', '');
         } catch (Exception $e) {
-            die('Erreur : '.$e->getMessage());
+            echo 'Erreur : '.$e->getMessage();
         }
 
         $user = $pdo->prepare("SELECT 1 FROM user WHERE username=?");

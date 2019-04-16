@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class UserTest extends TestCase
 {
-    private $User;
+    private $user;
 
     public function setUp()
     {
