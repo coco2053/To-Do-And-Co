@@ -10,34 +10,45 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class UserVoterTest extends TestCase
 {
-    /**
-     * @dataProvider voterProvider
-     *
-     */
-    public function testUserVoter($user, $expected)
+    private $voter;
+    private $token;
+    private $user;
+    private $targetUser;
+
+    public function setUp()
     {
-        $voter = new UserVoter();
-
-        $token = new AnonymousToken('secret', 'anonymous');
-
-        if ($user) {
-            $token = new UsernamePasswordToken($user, 'credentials', 'memory');
-        }
-
-        $this->assertSame($expected, $voter->vote($token, $user, ['GET']));
+        $this->voter = new UserVoter();
+        $this->user = $this->createMock(User::class);
+        $this->token = new UsernamePasswordToken($this->user, 'credentials', 'memory');
     }
 
-    public function voterProvider()
+    public function testUserVoterGet()
     {
-        $userOne = $this->createMock(User::class);
-        $userOne->method('getId')->willReturn(1);
-        $userOne->method('isAdmin')->willReturn(true);
-        $userTwo = $this->createMock(User::class);
-        $userTwo->method('getId')->willReturn(1);
-        $userTwo->method('isAdmin')->willReturn(false);
-        return [
-            [$userOne, 1],
-            [$userTwo, -1]
-        ];
+        $this->user->method('isAdmin')->willReturn(1);
+        $this->assertSame(1, $this->voter->vote($this->token, $this->user, ['GET']));
+    }
+
+    public function testUserVoterGetNotAdmin()
+    {
+        $this->user->method('isAdmin')->willReturn(0);
+        $this->assertSame(-1, $this->voter->vote($this->token, $this->user, ['GET']));
+    }
+
+    public function testUserVoterGetNoUser()
+    {
+        $token = new AnonymousToken('secret', 'anonymous');
+        $this->assertSame(-1, $this->voter->vote($token, $this->user, ['GET']));
+    }
+
+    public function testUserVoterEdit()
+    {
+        $this->user->method('isAdmin')->willReturn(1);
+        $this->assertSame(1, $this->voter->vote($this->token, $this->user, ['EDIT']));
+    }
+
+    public function testUserVoterEditNotAdmin()
+    {
+        $this->user->method('isAdmin')->willReturn(0);
+        $this->assertSame(-1, $this->voter->vote($this->token, $this->user, ['EDIT']));
     }
 }

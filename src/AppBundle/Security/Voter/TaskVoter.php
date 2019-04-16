@@ -40,7 +40,6 @@ class TaskVoter extends Voter
 
         switch ($attribute) {
             case 'EDIT':
-                $role = $user->getRoles();
                 if ($user == $task->getUser()) {
                     return true;
                 }
@@ -49,7 +48,6 @@ class TaskVoter extends Voter
                 }
                 break;
             case 'DELETE':
-                $role = $user->getRoles();
                 if ($user == $task->getUser()) {
                     return true;
                 }

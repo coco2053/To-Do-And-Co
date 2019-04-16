@@ -59,7 +59,7 @@ class TestedTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertEquals($user->getRoles(), $form->get('roles')->getData());
         $this->assertEquals($user->getUsername(), $form->get('username')->getData());
-        //$this->assertEquals($user->getPassword(), $form->get('password')->getData());
+        $this->assertEquals($user->getPassword()['first'], $form->get('password')->getData());
         $this->assertEquals($user->getEmail(), $form->get('email')->getData());
         $view = $form->createView();
         $children = $view->children;

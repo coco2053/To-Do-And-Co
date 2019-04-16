@@ -32,17 +32,21 @@ class UserVoter extends Voter
      */
     protected function voteOnAttribute($attribute, $user, TokenInterface $token)
     {
-        // if the user is anonymous, do not grant access
+        $user = $token->getUser();
         if (!$user instanceof UserInterface) {
             return false;
         }
 
         switch ($attribute) {
             case 'GET':
-                return $user->isAdmin();
+                if ($user->isAdmin()) {
+                    return true;
+                }
                 break;
             case 'EDIT':
-                return $user->isAdmin();
+                if ($user->isAdmin()) {
+                    return true;
+                }
                 break;
         }
         return false;

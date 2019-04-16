@@ -3,6 +3,10 @@ Feature:
   As a anonymous user
   I want to access to different pages
 
+  @User_delete
+  Scenario: Reset BDD User
+    Given I delete Marco user
+
   @login_page
   Scenario: A anonymous user can access to login page
     Given I'm on "/login" page

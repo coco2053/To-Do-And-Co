@@ -7,56 +7,55 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
+    private $task;
+
+    public function setUp()
+    {
+        $this->task = new Task();
+    }
 
     public function testId()
     {
-        $task = new Task;
-        $this->assertEquals(null, $task->getId());
+        $this->assertEquals(null, $this->task->getId());
     }
 
-    public function testCreatedAt()
+    public function testgetCreatedAt()
     {
-        $task = new Task;
-        $this->assertEquals(date('Y-m-d H:i:s'), $task->getCreatedAt()->format('Y-m-d H:i:s'));
+        $this->task->setCreatedAt(new \DateTime);
+        $this->assertEquals(date('Y-m-d H:i:s'), $this->task->getCreatedAt()->format('Y-m-d H:i:s'));
     }
 
     public function testTitle()
     {
-        $task = new Task;
-        $task->setTitle('La dépression post natale chez les cervidés');
-        $this->assertEquals('La dépression post natale chez les cervidés', $task->getTitle());
+        $this->task->setTitle('La dépression post natale chez les cervidés');
+        $this->assertEquals('La dépression post natale chez les cervidés', $this->task->getTitle());
     }
 
     public function testContent()
     {
-        $task = new Task;
-        $task->setContent('Super contenu');
-        $this->assertEquals('Super contenu', $task->getContent());
+        $this->task->setContent('Super contenu');
+        $this->assertEquals('Super contenu', $this->task->getContent());
     }
 
     public function testIsDone()
     {
-        $task = new Task;
-        $this->assertEquals(false, $task->IsDone());
+        $this->assertEquals(false, $this->task->IsDone());
     }
 
     public function testToggle()
     {
-        $task = new Task;
-        $this->assertEquals(false, $task->toggle(false));
+        $this->assertEquals(false, $this->task->toggle(false));
     }
 
     public function testUser()
     {
-        $task = new Task;
         $userStub = $this->createMock(User::class);
-        $task->setUser($userStub);
-        $this->assertEquals($userStub, $task->getUser());
+        $this->task->setUser($userStub);
+        $this->assertEquals($userStub, $this->task->getUser());
     }
 
     public function testNoUser()
     {
-        $task = new Task;
-        $this->assertEquals('Anonyme', $task->getUser()->getUsername());
+        $this->assertEquals('Anonyme', $this->task->getUser()->getUsername());
     }
 }
